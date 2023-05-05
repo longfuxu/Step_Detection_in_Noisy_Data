@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
@@ -138,8 +139,9 @@ def estimate_min_distance(step_locs, fraction=0.3):
     return min_distance
 
 # Main funtion to detect steps
-def detect_steps(x, y, filter_window=5, filter_polyorder=3, scaling_factor=1.1, distance_fraction=0.3):
+def detect_steps(x, y, file_path,filter_window=5, filter_polyorder=3, scaling_factor=1.1, distance_fraction=0.3):
     """
+    0.file_path: the absolute path of your data files; used to save analyzed file in the same folder.
     1. x and y: These are the input data arrays, representing the x and y values of the data points.
     2. filter_window: This argument defines the window length of the Savitzky-Golay filter. 
     It should be an odd integer. Increasing the window length will result in smoother filtered data, 
@@ -176,13 +178,20 @@ def detect_steps(x, y, filter_window=5, filter_polyorder=3, scaling_factor=1.1, 
     fitted_steps = reconstruct_fitted_curve(x, y, optimal_step_locs, recalculated_step_sizes)
 
     # Export original data, filtered data, and fitted data to a CSV file
-    data_export = pd.DataFrame({
+    fitted_data_export = pd.DataFrame({
     "X": x[:len(filtered_data)],
     "Original Data": y[:len(filtered_data)],
     "Filtered Data": filtered_data,
     "Fitted Data": fitted_steps
     })
-    data_export.to_csv("/Users/longfu/Desktop/data_export.csv", index=False)
+    # fitted_data_export.to_csv("/Users/longfu/Desktop/fitted_data_export.csv", index=False)
+
+    # Export results of analyzed data to a CSV file
+    result_export = pd.DataFrame({
+    "Step Location": optimal_step_locs,
+    "Step Size": recalculated_step_sizes
+    })
+    # result_export.to_csv("/Users/longfu/Desktop/result_export.csv", index=False)
 
     plt.rcParams.update({'font.size': 14})
     fig, axes = plt.subplots(2, 1, figsize=(10, 8))
@@ -191,18 +200,35 @@ def detect_steps(x, y, filter_window=5, filter_polyorder=3, scaling_factor=1.1, 
     axes[0].plot(x, filtered_data, label="Filtered Data", linewidth=1)
     axes[0].plot(x, fitted_steps, label="Fitted Steps", linewidth=1.5)
     axes[0].legend()
-    axes[0].set_xlabel('X-axis label')
-    axes[0].set_ylabel('Y-axis label')
+    axes[0].set_xlabel('Time')
+    axes[0].set_ylabel('Basepairs Unwound')
     # Plot the quality check
     axes[1].plot(range(len(sorted_residuals)), sorted_residuals, label="Sorted Residuals vs Iteration Steps", linewidth=1, marker='o', markersize=4)
     axes[1].axvline(x=len(optimal_step_locs), color='b', linestyle='--', label="Threshold")
     axes[1].legend()
     axes[1].set_xlabel('Iteration Steps')
     axes[1].set_ylabel('Residuals')
-
     plt.tight_layout()
-    plt.savefig("/Users/longfu/Desktop/plot.svg", format='svg', dpi=300, bbox_inches='tight')
+    # plt.savefig("/Users/longfu/Desktop/plot.svg", format='svg', dpi=300, bbox_inches='tight')
     
+    # Extract directory and base name from the file_path
+    file_dir = os.path.dirname(file_path)
+    file_base_name, _ = os.path.splitext(os.path.basename(file_path))
+
+    # Create new file names for the fitted data, result data, and the plot
+    fitted_data_file = os.path.join(file_dir, f"{file_base_name}_fitted_data_export.csv")
+    result_data_file = os.path.join(file_dir, f"{file_base_name}_result_export.csv")
+    plot_file = os.path.join(file_dir, f"{file_base_name}_plot.svg")
+
+    # Export original data, filtered data, and fitted data to a CSV file
+    fitted_data_export.to_csv(fitted_data_file, index=False)
+
+    # Export results of analyzed data to a CSV file
+    result_export.to_csv(result_data_file, index=False)
+
+    # Save the plot
+    plt.savefig(plot_file, format='svg', dpi=300, bbox_inches='tight')
+
     # plt.show()
 
     print("min distance:", min_distance)
@@ -210,3 +236,14 @@ def detect_steps(x, y, filter_window=5, filter_polyorder=3, scaling_factor=1.1, 
     print("Recalculated step sizes:", recalculated_step_sizes)
     print("Estimated noise standard deviation:", estimated_noise_std)
     return x, fitted_steps,optimal_step_locs, sorted_residuals
+
+"""
+# Read data from the input file
+file_path = "Example Data.csv"
+data_imported = np.loadtxt(file_path, delimiter=',')
+x = data_imported[:, 0]
+data = data_imported[:, 1]
+
+# Call the detect_steps function with the required arguments
+detect_steps(x, data,filter_window=5, filter_polyorder=3, scaling_factor=1.1, distance_fraction=0.3)
+"""

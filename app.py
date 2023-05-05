@@ -18,9 +18,14 @@ def main():
         st.session_state.x = None
     if 'data' not in st.session_state:
         st.session_state.data = None
+    if 'file_path' not in st.session_state:
+        st.session_state.file_path = None
+    
+    if uploaded_file:
+        st.session_state.file_path = uploaded_file.name
 
     if uploaded_file:
-        data_imported = np.loadtxt(uploaded_file, delimiter=';') # make sure your dataset has a correct format when import
+        data_imported = np.loadtxt(uploaded_file, delimiter=',') # make sure your dataset has a correct format when import
         # data_imported = np.loadtxt(uploaded_file)
         st.session_state.x = data_imported[:, 0]
         st.session_state.data = data_imported[:, 1]
@@ -45,13 +50,13 @@ def main():
         st.pyplot(fig)
 
     st.sidebar.markdown("## Parameters")
-    filter_window = st.sidebar.number_input("Filter Window", min_value=5, value=5, step=1)
-    filter_polyorder = st.sidebar.number_input("Filter Polynomial Order", min_value=3, value=3, step=1)
+    filter_window = int(st.sidebar.number_input("Filter Window", min_value=5, value=5, step=1))
+    filter_polyorder = int(st.sidebar.number_input("Filter Polynomial Order", min_value=3, value=3, step=1))
     scaling_factor = st.sidebar.number_input("Scaling Factor", min_value=0.8, value=1.1, step=0.1)
     distance_fraction = st.sidebar.number_input("Distance Fraction", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
 
-    if st.button("Detect Steps") and (st.session_state.x is not None) and (st.session_state.data is not None):
-        x, fitted_steps, optimal_step_locs, sorted_residuals = detect_steps(st.session_state.x, st.session_state.data, filter_window, filter_polyorder, scaling_factor, distance_fraction)
+    if st.button("Detect Steps") and (st.session_state.x is not None) and (st.session_state.data is not None) and (st.session_state.file_path is not None):
+        x, fitted_steps, optimal_step_locs, sorted_residuals = detect_steps(st.session_state.x, st.session_state.data, st.session_state.file_path, filter_window, filter_polyorder, scaling_factor, distance_fraction)
 
         # Show the results
         fig, ax = plt.subplots()
