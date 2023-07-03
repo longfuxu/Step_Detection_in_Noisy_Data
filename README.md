@@ -1,11 +1,7 @@
 # Step Detection in Noisy Data
 
----
 All codes listed in this repository are developed by Longfu Xu during the phD work in Gijs Wuite Group, to investigate the DNA replication at the single-molecule level.
 
-Please note that the code in this repository is custom written for internal lab use and still may contain bugs; external support cannot be guaranteed.
-
-Developer: Longfu Xu (longfuxu.com) . Maintenance, development, support. For questions or reports, e-mail: l2.xu@vu.nl
 ---
 
 This Python script provides a method for detecting step locations and sizes in step-like traces with Gaussian noise. The method involves generating a step-like trace, estimating the noise level, filtering the noise, and finally detecting step locations and sizes.
@@ -130,3 +126,15 @@ noise_std = 1.5
      ```
      
 By following the instructions in this README, users should be able to understand the theory behind the step detection method, and know how to apply the provided script to their own datasets.
+
+---
+### Disclaimer
+Please note that the code in this repository is custom written for internal lab use and still may contain bugs; external support cannot be guaranteed.
+
+### Contributing
+If you feel like contributing to the project, please do! Bug fixes, enhancements, visual fixes etc. are always welcome. If you want to implement something big: Please start a discussion about that! 
+
+### About Me
+[Longfu Xu](https://www.longfuxu.com) . Maintenance, development, support. For questions or reports, e-mail: l2.xu@vu.nl
+
+---
