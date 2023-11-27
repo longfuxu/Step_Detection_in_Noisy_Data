@@ -8,6 +8,7 @@ This Python script provides a method for detecting step locations and sizes in s
 - Methodology
 - Algorithm Detailed Outline
 - Usage
+- Use in an UI app
 - Citation
 
 ## Introduction
@@ -159,7 +160,7 @@ Simply run the Python script `test.py` to generate synthetic step-like data with
 #### Noise std = 2
 ![Alt text](property/plot3.png)
 
-## Usage in UI app
+## Use in an UI app 
 ```bash
 streamlit run app.py
 ```
