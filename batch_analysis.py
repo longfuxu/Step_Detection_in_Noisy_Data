@@ -4,7 +4,7 @@ import glob
 from step_detection import detect_steps
 
 # Set the root folder
-root_folder = "/Users/longfu/Library/CloudStorage/Dropbox/5-T7 Helicase-SSB_PNAS/Raw data/Figure 1 and 2/Figure 1D"
+root_folder = "Your data folder"
 
 # Find all CSV files in the root folder and its subfolders recursively
 csv_files = glob.glob(os.path.join(root_folder, '**', '*.csv'), recursive=True)

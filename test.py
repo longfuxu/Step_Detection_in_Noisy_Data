@@ -4,7 +4,7 @@ from step_detection import generate_step_data, detect_steps
 n_points = 1000
 step_locs = [0.05, 0.1, 0.12, 0.15, 0.2, 0.21, 0.24, 0.3, 0.32, 0.4, 0.41, 0.52, 0.55, 0.6, 0.7, 0.77, 0.8, 0.81, 0.85, 0.9]
 step_sizes = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]
-noise_std = 0.2
+noise_std = 2
 x, data = generate_step_data(n_points, step_locs, step_sizes, noise_std)
 
 ## Load data from the text file (replace 'data.txt' with the correct file name)
@@ -32,4 +32,4 @@ x, data = generate_step_data(n_points, step_locs, step_sizes, noise_std)
     A smaller distance fraction will allow steps to be closer together, potentially detecting more steps. 
     Users should choose a distance_fraction that reflects the expected spacing between steps in their data.
 """
-detect_steps(x, data,filter_window=5, filter_polyorder=3, scaling_factor=1.1, distance_fraction=0.3)
+detect_steps(x, data,'Test_Data/',filter_window=5, filter_polyorder=3, scaling_factor=1.1, distance_fraction=0.3)

@@ -1,2 +1,4 @@
 /Doc
 .DS_Store
+main.py
+.aider*
