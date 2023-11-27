@@ -1,7 +1,5 @@
 # Step Detection in Noisy Data
 
-This README file provides an overview of the script, explains the algorithms used for noise filtering, noise estimation, and step detection, and describes how to use the script. 
-
 This Python script is designed to identify steps in noisy data, specifically Gaussian noise. The script first filters the noise to reveal the underlying step-like structure, and then it applies a step-fitting algorithm to detect the locations and sizes of the steps.
 
 ## Overview

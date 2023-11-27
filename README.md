@@ -127,6 +127,9 @@ noise_std = 1.5
      
 By following the instructions in this README, users should be able to understand the theory behind the step detection method, and know how to apply the provided script to their own datasets.
 
+## Citation
+Xu, L. (2023) Grab, manipulate and watch single DNA molecule replication. PhD-Thesis - Research and graduation internal. Available at: https://doi.org/10.5463/thesis.424.
+
 ---
 ### Disclaimer
 Please note that the code in this repository is custom written for internal lab use and still may contain bugs; external support cannot be guaranteed.
