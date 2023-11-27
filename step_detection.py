@@ -166,10 +166,14 @@ def detect_steps(x, y, file_path,filter_window=5, filter_polyorder=3, scaling_fa
     # Estimate the noise standard deviation
     estimated_noise_std = estimate_noise_std(filtered_data, scaling_factor)
 
-    # Find the optimal steps and step sizes
+    # Find the optimal steps and step sizes with debugging statements
+    print("Starting step detection...")
     optimal_step_locs, _, sorted_residuals = find_optimal_steps(filtered_data, step_size_threshold=estimated_noise_std)
+    print(f"Optimal step locations (before min_distance filter): {optimal_step_locs}")
     min_distance = estimate_min_distance(optimal_step_locs, fraction=distance_fraction)
+    print(f"Estimated min_distance: {min_distance}")
     optimal_step_locs, _, sorted_residuals = find_optimal_steps(filtered_data, step_size_threshold=estimated_noise_std, min_distance=min_distance)
+    print(f"Optimal step locations (after min_distance filter): {optimal_step_locs}")
 
     # Recalculate step sizes based on the optimal step locations
     recalculated_step_sizes = recalculate_step_sizes(filtered_data, optimal_step_locs)
@@ -231,11 +235,13 @@ def detect_steps(x, y, file_path,filter_window=5, filter_polyorder=3, scaling_fa
 
     # plt.show()
 
+    # Add debugging statements to print out key variables
     print("min distance:", min_distance)
     print("Optimal step locations:", optimal_step_locs)
     print("Recalculated step sizes:", recalculated_step_sizes)
     print("Estimated noise standard deviation:", estimated_noise_std)
-    return x, fitted_steps,optimal_step_locs, sorted_residuals
+    print("Finished step detection.")
+    return x, fitted_steps, optimal_step_locs, sorted_residuals
 
 """
 # EXAMPLE USE CASE 
