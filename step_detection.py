@@ -218,7 +218,7 @@ def detect_steps(x, y, file_path,filter_window=5, filter_polyorder=3, scaling_fa
     # Create new file names for the fitted data, result data, and the plot
     fitted_data_file = os.path.join(file_dir, f"{file_base_name}_fitted_data_export.csv")
     result_data_file = os.path.join(file_dir, f"{file_base_name}_result_export.csv")
-    plot_file = os.path.join(file_dir, f"{file_base_name}_plot.eps")
+    plot_file = os.path.join(file_dir, f"{file_base_name}_plot.png")
 
     # Export original data, filtered data, and fitted data to a CSV file
     fitted_data_export.to_csv(fitted_data_file, index=False)
@@ -227,7 +227,7 @@ def detect_steps(x, y, file_path,filter_window=5, filter_polyorder=3, scaling_fa
     result_export.to_csv(result_data_file, index=False)
 
     # Save the plot
-    plt.savefig(plot_file, format='eps', dpi=300, bbox_inches='tight')
+    plt.savefig(plot_file, format='png', dpi=300, bbox_inches='tight')
 
     # plt.show()
 
